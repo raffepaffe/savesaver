@@ -1,0 +1,59 @@
+{
+  "name": "save-saver",
+  "displayName": "Save Saver Status Bar Color Change",
+  "icon": "icon.png",
+  "description": "A Visual Studio Code extension that changes the status bar color when there are unsaved files in the editor.",
+  "version": "0.0.1",
+  "publisher": "raffepaffe",
+  "engines": {
+    "vscode": "^1.97.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "save-saver.refresh",
+        "title": "Refresh Save Saver Status Bar Color"
+      }
+    ],
+    "configuration": {
+      "title": "Save Saver Status Bar Color Change",
+      "properties": {
+        "saveSaverStatusBarColorChange.unsavedFilesColor": {
+          "type": "string",
+          "default": "#FF0000",
+          "description": "The color to use for the status bar when there are unsaved files. Use standard hex color format (e.g., #FF0000 for red)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.97.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.22.0",
+    "@typescript-eslint/parser": "^8.22.0",
+    "eslint": "^9.19.0",
+    "typescript": "^5.7.3",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raffepaffe/savesaver"
+  }
+}
