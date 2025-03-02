@@ -2,6 +2,8 @@
 
 A Visual Studio Code extension that changes the status bar color when there are unsaved files in the editor.
 
+Have a look at it at the [visualstudio marketplace](https://marketplace.visualstudio.com/items?itemName=raffepaffe.save-saver) for more details.
+
 ## Features
 
 - Status bar changes color when any file has unsaved changes
