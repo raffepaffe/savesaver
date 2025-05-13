@@ -4,7 +4,7 @@ export function activate(context: vscode.ExtensionContext) {
     console.log('Extension "statusbar-color-change" is now active');
 
     // Store the original status bar color
-    let originalColorCustomization: string | null = null;
+    const originalColorCustomization = new vscode.ThemeColor('statusBar.background');
     let isStatusBarColorChanged = false;
 
     // Function to get the user-configured color or default to red
@@ -30,18 +30,13 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     // Function to update the status bar color
-    function updateStatusBarColor(isDirty: boolean) {
+    function updateStatusBarColor(isDirty: boolean, force: boolean = false) {
         // Get the current color customizations
         const currentConfig = vscode.workspace.getConfiguration('workbench');
         const currentColorCustomizations = currentConfig.get<Record<string, string>>('colorCustomizations') || {};
 
         // Only make changes if the state has changed
-        if (isDirty && !isStatusBarColorChanged) {
-            // Save original color if we haven't already
-            if (originalColorCustomization === null) {
-                originalColorCustomization = (currentColorCustomizations as any)['statusBar.background'] || null;
-            }
-
+        if (isDirty && (force || !isStatusBarColorChanged)) {
             // Set status bar to user-configured color
             const newColorCustomizations = {
                 ...currentColorCustomizations,
@@ -53,15 +48,11 @@ export function activate(context: vscode.ExtensionContext) {
                     isStatusBarColorChanged = true;
                     console.log('Status bar changed to configured color');
                 });
-        } else if (!isDirty && isStatusBarColorChanged) {
+        } else if (!isDirty && (force || isStatusBarColorChanged)) {
             // Restore original color if all files are saved
             const newColorCustomizations = { ...currentColorCustomizations };
             
-            if (originalColorCustomization) {
-                (newColorCustomizations as any)['statusBar.background'] = originalColorCustomization;
-            } else {
-                delete (newColorCustomizations as any)['statusBar.background'];
-            }
+            (newColorCustomizations as any)['statusBar.background'] = originalColorCustomization;
 
             currentConfig.update('colorCustomizations', newColorCustomizations, vscode.ConfigurationTarget.Global)
                 .then(() => {
@@ -80,8 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (e.affectsConfiguration('saveSaverStatusBarColorChange.unsavedFilesColor') && isStatusBarColorChanged) {
                 // If color setting changed and we're currently showing a colored status bar,
                 // update to the new color immediately
-                isStatusBarColorChanged = false; // force color update
-                updateStatusBarColor(true);
+                updateStatusBarColor(true, true);
             }
         })
     );
