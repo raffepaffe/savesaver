@@ -80,6 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (e.affectsConfiguration('saveSaverStatusBarColorChange.unsavedFilesColor') && isStatusBarColorChanged) {
                 // If color setting changed and we're currently showing a colored status bar,
                 // update to the new color immediately
+                isStatusBarColorChanged = false; // force color update
                 updateStatusBarColor(true);
             }
         })
@@ -125,7 +126,8 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     // Add a command to manually refresh the status bar color
-    const refreshCommand = vscode.commands.registerCommand('statusbar-color-change.refresh', () => {
+    const refreshCommand = vscode.commands.registerCommand('save-saver.refresh', () => {
+        isStatusBarColorChanged = false; // force color update
         checkForUnsavedFiles();
     });
 
