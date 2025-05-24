@@ -38,6 +38,12 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 0.0.2
+
+Fist bug fix:
+- Status bar reminas marked as having changed files if it was closed with unsaved files
+
+
 ### 0.0.1
 
 Initial release:
