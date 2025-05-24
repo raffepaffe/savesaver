@@ -3,7 +3,7 @@
   "displayName": "Save Saver Status Bar Color Change",
   "icon": "icon.png",
   "description": "A Visual Studio Code extension that changes the status bar color when there are unsaved files in the editor.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "raffepaffe",
   "engines": {
     "vscode": "^1.97.0"
